@@ -35,41 +35,22 @@ class DonationComponent extends Component
             'status' => 'pending',
         ]);
 
-        // Midtrans Config
-        \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
-        \Midtrans\Config::$isProduction = config('services.midtrans.is_production');
-        \Midtrans\Config::$isSanitized = true;
-        \Midtrans\Config::$is3ds = true;
-
-        $params = [
-            'transaction_details' => [
-                'order_id' => $orderId,
-                'gross_amount' => (int) $this->amount,
-            ],
-            'customer_details' => [
-                'first_name' => $this->donorName,
-                'email' => auth()->user()->email ?? 'guest@example.com',
-            ],
-            'item_details' => [
-                [
-                    'id' => $campaign->id,
-                    'price' => (int) $this->amount,
-                    'quantity' => 1,
-                    'name' => 'Wakaf: ' . $campaign->title,
-                ]
-            ],
-        ];
+        // Pakasir Redirection
+        $slug = config('services.pakasir.project_slug');
+        $email = auth()->user()->email ?? 'guest@example.com';
+        
+        $paymentUrl = "https://app.pakasir.com/p/{$slug}?" . http_build_query([
+            'order_id' => $orderId,
+            'amount' => (int) $this->amount,
+            'customer_name' => $this->donorName,
+            'customer_email' => $email,
+            'redirect_url' => route('donation.history'), // URL setelah bayar
+        ]);
 
         try {
-            if (app()->environment('testing')) {
-                $this->snapToken = 'test-snap-token';
-            } else {
-                $this->snapToken = \Midtrans\Snap::getSnapToken($params);
-            }
+            $donation->update(['snap_token' => $paymentUrl]); // Menyimpan URL ke kolom yang sama agar tidak mengubah migrasi
             
-            $donation->update(['snap_token' => $this->snapToken]);
-            
-            $this->dispatch('display-snap', token: $this->snapToken);
+            $this->dispatch('redirect-to-payment', url: $paymentUrl);
         } catch (\Exception $e) {
             session()->flash('error', 'Gagal menghubungkan ke sistem pembayaran: ' . $e->getMessage());
         }

@@ -38,4 +38,9 @@ return [
         'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
     ],
 
+    'pakasir' => [
+        'api_key' => env('PAKASIR_API_KEY'),
+        'project_slug' => env('PAKASIR_PROJECT_SLUG', 'lwp-pwnu-jatim'),
+    ],
+
 ];

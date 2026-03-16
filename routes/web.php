@@ -27,4 +27,5 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/register-nadzir', \App\Livewire\NadzirRegistration::class)->name('nadzir.register');
+    Route::get('/donations', \App\Livewire\DonationHistory::class)->name('donation.history');
 });

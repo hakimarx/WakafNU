@@ -8,44 +8,31 @@ class PaymentController extends Controller
 {
     public function callback(Request $request)
     {
-        \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
-        \Midtrans\Config::$isProduction = config('services.midtrans.is_production');
+        // Handle Pakasir Callback
+        $orderId = $request->input('order_id');
+        $status = $request->input('status'); // 'success' or 'completed'
+        
+        // Log callback for debugging
+        \Log::info('Pakasir Callback:', $request->all());
 
-        if (app()->environment('testing')) {
-            $notification = (object) $request->all();
-        } else {
-            $notification = new \Midtrans\Notification();
-        }
-
-        $donation = \App\Models\Donation::where('external_id', $notification->order_id)->first();
+        $donation = \App\Models\Donation::where('external_id', $orderId)->first();
 
         if (!$donation) {
             return response()->json(['message' => 'Donation not found'], 404);
         }
 
-        $transactionStatus = $notification->transaction_status;
-        $type = $notification->payment_type;
-        $orderId = $notification->order_id;
-        $fraud = $notification->fraud_status;
-
-        if ($transactionStatus == 'capture') {
-            if ($type == 'credit_card') {
-                if ($fraud == 'challenge') {
-                    $donation->update(['status' => 'pending']);
-                } else {
-                    $donation->update(['status' => 'success']);
+        // Jika status success atau sudah dibayar
+        if (in_array($status, ['success', 'completed']) || $request->has('paid_at')) {
+            if ($donation->status !== 'success') {
+                $donation->update(['status' => 'success']);
+                
+                // Update Campaign current_amount
+                $campaign = $donation->campaign;
+                if ($campaign) {
+                    $campaign->increment('current_amount', $donation->amount);
                 }
             }
-        } elseif ($transactionStatus == 'settlement') {
-            $donation->update(['status' => 'success']);
-            
-            // Update Campaign current_amount
-            $campaign = $donation->campaign;
-            $campaign->increment('current_amount', $donation->amount);
-            
-        } elseif ($transactionStatus == 'pending') {
-            $donation->update(['status' => 'pending']);
-        } elseif ($transactionStatus == 'deny' || $transactionStatus == 'expire' || $transactionStatus == 'cancel') {
+        } elseif (in_array($status, ['failed', 'expired', 'canceled'])) {
             $donation->update(['status' => 'failed']);
         }
 

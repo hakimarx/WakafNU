@@ -26,29 +26,11 @@
         </button>
     </div>
 
-    <!-- Snap JS Script -->
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+    <!-- Pakasir Script -->
     <script>
-        window.addEventListener('display-snap', event => {
-            window.snap.pay(event.detail.token, {
-                onSuccess: function(result) {
-                    /* You may add your own implementation here */
-                    alert("Pembayaran berhasil!"); console.log(result);
-                    window.location.reload();
-                },
-                onPending: function(result) {
-                    /* You may add your own implementation here */
-                    alert("Menunggu pembayaran!"); console.log(result);
-                },
-                onError: function(result) {
-                    /* You may add your own implementation here */
-                    alert("Pembayaran gagal!"); console.log(result);
-                },
-                onClose: function(result) {
-                    /* You may add your own implementation here */
-                    alert('Anda menutup popup tanpa menyelesaikan pembayaran');
-                }
-            });
+        window.addEventListener('redirect-to-payment', event => {
+            // Redirect ke halaman pembayaran Pakasir
+            window.location.href = event.detail.url;
         });
     </script>
 </div>
