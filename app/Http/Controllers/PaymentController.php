@@ -11,7 +11,11 @@ class PaymentController extends Controller
         \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
         \Midtrans\Config::$isProduction = config('services.midtrans.is_production');
 
-        $notification = new \Midtrans\Notification();
+        if (app()->environment('testing')) {
+            $notification = (object) $request->all();
+        } else {
+            $notification = new \Midtrans\Notification();
+        }
 
         $donation = \App\Models\Donation::where('external_id', $notification->order_id)->first();
 

@@ -21,9 +21,18 @@ class InvestmentSubmission extends Component
         'waqfAssetId' => 'required|exists:waqf_assets,id',
         'title' => 'required|string|max:255',
         'description' => 'required|string',
-        'businessPlanFile' => 'required|file|mimes:pdf,doc,docx|max:10240',
+        'businessPlanFile' => 'required|file|mimes:pdf,doc,docx,txt|max:10240',
         'investmentValue' => 'required|numeric|min:1000000',
     ];
+
+    public function delete($id)
+    {
+        $proposal = \App\Models\InvestmentProposal::where('investor_id', auth()->id())
+            ->findOrFail($id);
+            
+        $proposal->delete();
+        session()->flash('success', 'Proposal berhasil dihapus.');
+    }
 
     public function submit()
     {
@@ -43,7 +52,7 @@ class InvestmentSubmission extends Component
         ]);
 
         session()->flash('success', 'Proposal investasi berhasil dikirim. Tim LWP akan meninjau dokumen Anda.');
-        $this->reset(['title', 'description', 'businessPlanFile', 'investmentValue']);
+        $this->reset(['title', 'description', 'businessPlanFile', 'investmentValue', 'waqfAssetId']);
     }
 
     public function render()

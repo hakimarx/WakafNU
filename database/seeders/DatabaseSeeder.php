@@ -28,6 +28,14 @@ class DatabaseSeeder extends Seeder
             'role' => 'nadzir',
         ]);
 
+        // Sample Investor
+        \App\Models\User::factory()->create([
+            'name' => 'Investor Budiman',
+            'email' => 'investor@example.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('password'),
+            'role' => 'investor',
+        ]);
+
         // Sample Assets
         $asset1 = \App\Models\WaqfAsset::create([
             'name' => 'Tanah Wakaf Strategis Surabaya',
@@ -56,5 +64,6 @@ class DatabaseSeeder extends Seeder
             'deadline' => now()->addMonths(6),
             'status' => 'active',
         ]);
+
     }
 }

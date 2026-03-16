@@ -1,0 +1,29 @@
+
+   FAIL  Tests\Feature\WakafCRUDTest
+  Γ£ô investor can create and delete proΓÇª 11.16s  
+  Γ£ô nadzir can register and delete asseΓÇª 0.74s  
+  Γ¿» wakif can initiate donation          0.19s  
+  ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ  
+   FAILED  Tests\Feature\WakΓÇª  QueryException   
+  SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: campaigns.waqf_asset_id (Connection: sqlite, SQL: insert into "campaigns" ("title", "description", "goal_amount", "current_amount", "deadline", "status", "updated_at", "created_at") values (Bantu Masjid, Desc, 10000000, 0, 2026-03-26 03:59:26, active, 2026-03-16 03:59:26, 2026-03-16 03:59:26))
+
+  at vendor\laravel\framework\src\Illuminate\Database\Connection.php:829
+    825Γûò                     $this->getName(), $query, $this->prepareBindings($bindings), $e
+    826Γûò                 );
+    827Γûò             }
+    828Γûò 
+  Γ₧£ 829Γûò             throw new QueryException(
+    830Γûò                 $this->getName(), $query, $this->prepareBindings($bindings), $e
+    831Γûò             );
+    832Γûò         }
+    833Γûò     }
+
+  1   vendor\laravel\framework\src\Illuminate\Database\Connection.php:829
+
+  2   vendor\laravel\framework\src\Illuminate\Database\Connection.php:587
+      NunoMaduro\Collision\Exceptions\TestException::("SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: campaigns.waqf_asset_id")
+
+
+  Tests:    1 failed, 2 passed (10 assertions)
+  Duration: 26.94s
+

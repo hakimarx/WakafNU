@@ -87,7 +87,7 @@
                         <th class="px-8 py-4 text-left text-xs font-black text-blue-900 uppercase tracking-widest">Judul & Aset</th>
                         <th class="px-8 py-4 text-left text-xs font-black text-blue-900 uppercase tracking-widest">Nilai Investasi</th>
                         <th class="px-8 py-4 text-left text-xs font-black text-blue-900 uppercase tracking-widest">Status</th>
-                        <th class="px-8 py-4 text-left text-xs font-black text-blue-900 uppercase tracking-widest">Update</th>
+                        <th class="px-8 py-4 text-center text-xs font-black text-blue-900 uppercase tracking-widest">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-100">
@@ -109,8 +109,8 @@
                                     {{ strtoupper($prop->status) }}
                                 </span>
                             </td>
-                            <td class="px-8 py-6 whitespace-nowrap text-sm text-gray-400 font-medium">
-                                {{ $prop->updated_at->diffForHumans() }}
+                            <td class="px-8 py-6 whitespace-nowrap text-center text-sm font-medium">
+                                <button wire:click="delete({{ $prop->id }})" class="text-red-600 hover:text-red-900 font-black italic uppercase tracking-tighter">Hapus</button>
                             </td>
                         </tr>
                     @empty
