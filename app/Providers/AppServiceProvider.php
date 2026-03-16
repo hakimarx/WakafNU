@@ -39,9 +39,12 @@ class AppServiceProvider extends ServiceProvider
 
             foreach ($dirs as $dir) {
                 if (!is_dir($dir)) {
-                    mkdir($dir, 0755, true);
+                    @mkdir($dir, 0755, true);
                 }
             }
+
+            // Ensure compiled views path is correct in Vercel
+            config(['view.compiled' => '/tmp/storage/framework/views']);
 
             if (config('database.default') === 'sqlite') {
                 $databasePath = config('database.connections.sqlite.database');
@@ -52,35 +55,25 @@ class AppServiceProvider extends ServiceProvider
                 }
 
                 if (!file_exists($databasePath)) {
-                    touch($databasePath);
+                    @touch($databasePath);
                 }
             }
 
             try {
-                if (config('database.default') !== 'sqlite') {
-                   DB::connection()->getPdo();
-                }
-                
-                // Check if migrations table exists
+                // Running migrations and seeders automatically on Vercel
                 if (!Schema::hasTable('migrations')) {
-                    \Log::info('No migrations table found. Running migrations...');
+                    error_log('Vercel: No migrations table found. Running migrate...');
                     Artisan::call('migrate', ['--force' => true]);
-                    \Log::info('Migrations completed.');
                 } else {
-                    // Always try to migrate to ensure latest schema
                     Artisan::call('migrate', ['--force' => true]);
                 }
 
-                // Check if we need to seed
                 if (DB::table('users')->count() === 0) {
-                    \Log::info('No users found. Running seeders...');
+                    error_log('Vercel: No users found. Running seed...');
                     Artisan::call('db:seed', ['--force' => true]);
-                    \Log::info('Seeding completed.');
                 }
             } catch (\Throwable $exception) {
-                \Log::error('Vercel Boot Error: ' . $exception->getMessage(), [
-                    'trace' => $exception->getTraceAsString()
-                ]);
+                error_log('Vercel Boot Error: ' . $exception->getMessage());
             }
         }
     }
