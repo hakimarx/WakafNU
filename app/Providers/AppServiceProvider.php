@@ -1,30 +1,3 @@
-<?php
-
-namespace App\Providers;
-
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Log;
-
-class AppServiceProvider extends ServiceProvider
-{
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        if (! env('VERCEL')) {
-            return;
-        }
-
-        if (env('DB_CONNECTION') === 'sqlite' && env('DB_DATABASE') === ':memory:') {
-            config([
-                'database.connections.sqlite.url' => null,
-                'database.connections.sqlite.database' => '/tmp/database.sqlite',
-            ]);
         }
     }
 
@@ -74,13 +47,13 @@ class AppServiceProvider extends ServiceProvider
                     DB::connection()->getPdo();
                     
                     if (!Schema::hasTable('migrations')) {
-                        Log::info('No migrations table found. Running migrations...');
+                        \Log::info('No migrations table found. Running migrations...');
                         Artisan::call('migrate', ['--force' => true]);
-                        Log::info('Migrations completed.');
+                        \Log::info('Migrations completed.');
                         
-                        Log::info('Running seeders...');
+                        \Log::info('Running seeders...');
                         Artisan::call('db:seed', ['--force' => true]);
-                        Log::info('Seeding completed.');
+                        \Log::info('Seeding completed.');
                         return;
                     }
 
@@ -94,12 +67,12 @@ class AppServiceProvider extends ServiceProvider
                         );
 
                     if ($requiresSeedData) {
-                        Log::info('Missing critical seed data. Running seeders...');
+                        \Log::info('Missing critical seed data. Running seeders...');
                         Artisan::call('db:seed', ['--force' => true]);
-                        Log::info('Seeding completed.');
+                        \Log::info('Seeding completed.');
                     }
                 } catch (\Throwable $exception) {
-                    Log::error('Vercel Boot Error: ' . $exception->getMessage(), [
+                    \Log::error('Vercel Boot Error: ' . $exception->getMessage(), [
                         'trace' => $exception->getTraceAsString()
                     ]);
                     // Don't rethrow, let the app try to boot even if DB is down
