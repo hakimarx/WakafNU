@@ -1,15 +1,13 @@
 <?php
 
-
 namespace App\Providers;
-
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\ServiceProvider;\nuse Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +19,6 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-
     /**
      * Bootstrap any application services.
      */
@@ -30,7 +27,6 @@ class AppServiceProvider extends ServiceProvider
         if (env('APP_ENV') === 'production') {
             URL::forceScheme('https');
         }
-
 
         if (env('VERCEL')) {
             $dirs = [
@@ -41,32 +37,26 @@ class AppServiceProvider extends ServiceProvider
                 '/tmp/storage/app/public',
             ];
 
-
             foreach ($dirs as $dir) {
                 if (!is_dir($dir)) {
                     mkdir($dir, 0755, true);
                 }
             }
 
-
             if (config('database.default') === 'sqlite') {
                 $databasePath = config('database.connections.sqlite.database');
-
 
                 if ($databasePath === ':memory:') {
                     $databasePath = '/tmp/database.sqlite';
                     config(['database.connections.sqlite.database' => $databasePath]);
                 }
 
-
                 if (!file_exists($databasePath)) {
                     touch($databasePath);
                 }
             }
 
-
             try {
-                // Ensure database connection
                 if (config('database.default') !== 'sqlite') {
                    DB::connection()->getPdo();
                 }
@@ -80,7 +70,6 @@ class AppServiceProvider extends ServiceProvider
                     // Always try to migrate to ensure latest schema
                     Artisan::call('migrate', ['--force' => true]);
                 }
-
 
                 // Check if we need to seed
                 if (DB::table('users')->count() === 0) {
