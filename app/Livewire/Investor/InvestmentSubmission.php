@@ -10,6 +10,7 @@ class InvestmentSubmission extends Component
 {
     use WithFileUploads;
 
+    public $proposalId;
     public $waqfAssetId;
     public $title;
     public $description;
@@ -17,17 +18,36 @@ class InvestmentSubmission extends Component
     public $investmentValue;
     public $scheme = 'BOT'; // Build Operate Transfer
 
-    protected $rules = [
-        'waqfAssetId' => 'required|exists:waqf_assets,id',
-        'title' => 'required|string|max:255',
-        'description' => 'required|string',
-        'businessPlanFile' => 'required|file|mimes:pdf,doc,docx,txt|max:10240',
-        'investmentValue' => 'required|numeric|min:1000000',
-    ];
+    protected function rules()
+    {
+        return [
+            'waqfAssetId' => 'required|exists:waqf_assets,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'businessPlanFile' => ($this->proposalId ? 'nullable' : 'required') . '|file|mimes:pdf,doc,docx,txt|max:10240',
+            'investmentValue' => 'required|numeric|min:1000000',
+        ];
+    }
+
+    public function edit($id)
+    {
+        $proposal = \App\Models\InvestmentProposal::where('investor_id', auth()->id())
+            ->where('status', 'pending')
+            ->findOrFail($id);
+
+        $this->proposalId = $proposal->id;
+        $this->waqfAssetId = $proposal->waqf_asset_id;
+        $this->title = $proposal->title;
+        $this->description = $proposal->business_plan_description;
+        $this->investmentValue = $proposal->investment_value;
+        $this->scheme = $proposal->scheme;
+        $this->businessPlanFile = null;
+    }
 
     public function delete($id)
     {
         $proposal = \App\Models\InvestmentProposal::where('investor_id', auth()->id())
+            ->where('status', 'pending')
             ->findOrFail($id);
             
         $proposal->delete();
@@ -38,21 +58,53 @@ class InvestmentSubmission extends Component
     {
         $this->validate();
 
-        $path = $this->businessPlanFile->store('business_plans', 'public');
+        $path = $this->businessPlanFile
+            ? $this->businessPlanFile->store('business_plans', 'public')
+            : null;
 
-        \App\Models\InvestmentProposal::create([
-            'investor_id' => auth()->id(),
-            'waqf_asset_id' => $this->waqfAssetId,
-            'title' => $this->title,
-            'business_plan_description' => $this->description,
-            'business_plan_file_path' => $path,
-            'scheme' => $this->scheme,
-            'investment_value' => $this->investmentValue,
-            'status' => 'pending',
-        ]);
+        if ($this->proposalId) {
+            $proposal = \App\Models\InvestmentProposal::where('investor_id', auth()->id())
+                ->where('status', 'pending')
+                ->findOrFail($this->proposalId);
 
-        session()->flash('success', 'Proposal investasi berhasil dikirim. Tim LWP akan meninjau dokumen Anda.');
-        $this->reset(['title', 'description', 'businessPlanFile', 'investmentValue', 'waqfAssetId']);
+            $proposal->update([
+                'waqf_asset_id' => $this->waqfAssetId,
+                'title' => $this->title,
+                'business_plan_description' => $this->description,
+                'business_plan_file_path' => $path ?: $proposal->business_plan_file_path,
+                'scheme' => $this->scheme,
+                'investment_value' => $this->investmentValue,
+            ]);
+
+            session()->flash('success', 'Proposal investasi berhasil diperbarui.');
+        } else {
+            \App\Models\InvestmentProposal::create([
+                'investor_id' => auth()->id(),
+                'waqf_asset_id' => $this->waqfAssetId,
+                'title' => $this->title,
+                'business_plan_description' => $this->description,
+                'business_plan_file_path' => $path,
+                'scheme' => $this->scheme,
+                'investment_value' => $this->investmentValue,
+                'status' => 'pending',
+            ]);
+
+            session()->flash('success', 'Proposal investasi berhasil dikirim. Tim LWP akan meninjau dokumen Anda.');
+        }
+
+        $this->resetForm();
+    }
+
+    public function cancelEdit()
+    {
+        $this->resetForm();
+    }
+
+    protected function resetForm()
+    {
+        $this->reset(['proposalId', 'title', 'description', 'businessPlanFile', 'investmentValue', 'waqfAssetId']);
+        $this->scheme = 'BOT';
+        $this->resetValidation();
     }
 
     public function render()

@@ -42,7 +42,7 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                            <button class="text-emerald-600 hover:text-emerald-900 mr-3">Edit</button>
+                            <button wire:click="edit({{ $asset->id }})" class="text-emerald-600 hover:text-emerald-900 mr-3">Edit</button>
                             <button wire:click="delete({{ $asset->id }})" class="text-red-600 hover:text-red-900">Hapus</button>
                         </td>
                     </tr>
@@ -59,8 +59,8 @@
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
             <div class="inline-block align-middle bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-emerald-800 px-6 py-4 flex justify-between items-center">
-                    <h3 class="text-lg font-bold text-white uppercase tracking-widest">Tambah Aset Baru</h3>
-                    <button wire:click="$set('isModalOpen', false)" class="text-white hover:text-amber-400">&times;</button>
+                    <h3 class="text-lg font-bold text-white uppercase tracking-widest">{{ $assetId ? 'Edit Aset' : 'Tambah Aset Baru' }}</h3>
+                    <button wire:click="closeModal" class="text-white hover:text-amber-400">&times;</button>
                 </div>
                 <div class="bg-white px-8 pt-6 pb-8 space-y-4">
                     <div>
@@ -87,8 +87,8 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-8 py-4 flex justify-end space-x-3 rounded-b-3xl">
-                    <button wire:click="$set('isModalOpen', false)" class="text-gray-500 font-bold px-6 py-2 transition hover:text-gray-800">Batal</button>
-                    <button wire:click="store" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-8 py-3 rounded-xl shadow-lg transition transform hover:scale-105">Simpan Aset</button>
+                    <button wire:click="closeModal" class="text-gray-500 font-bold px-6 py-2 transition hover:text-gray-800">Batal</button>
+                    <button wire:click="save" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-8 py-3 rounded-xl shadow-lg transition transform hover:scale-105">{{ $assetId ? 'Perbarui Aset' : 'Simpan Aset' }}</button>
                 </div>
             </div>
         </div>

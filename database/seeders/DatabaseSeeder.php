@@ -13,31 +13,45 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Admin LWP PWNU
-        \App\Models\User::factory()->create([
-            'name' => 'Admin LWP PWNU Jatim',
+        \App\Models\User::updateOrCreate([
             'email' => 'admin@lwpwnujatim.org',
+        ], [
+            'name' => 'Admin LWP PWNU Jatim',
             'password' => \Illuminate\Support\Facades\Hash::make('password'),
             'role' => 'admin',
         ]);
 
         // Sample Nadzir
-        $nadzir = \App\Models\User::factory()->create([
-            'name' => 'Nadzir Sholeh',
+        $nadzir = \App\Models\User::updateOrCreate([
             'email' => 'nadzir@example.com',
+        ], [
+            'name' => 'Nadzir Sholeh',
             'password' => \Illuminate\Support\Facades\Hash::make('password'),
             'role' => 'nadzir',
         ]);
 
         // Sample Investor
-        \App\Models\User::factory()->create([
-            'name' => 'Investor Budiman',
+        \App\Models\User::updateOrCreate([
             'email' => 'investor@example.com',
+        ], [
+            'name' => 'Investor Budiman',
             'password' => \Illuminate\Support\Facades\Hash::make('password'),
             'role' => 'investor',
         ]);
 
+        // Sample Wakif
+        \App\Models\User::updateOrCreate([
+            'email' => 'wakif@example.com',
+        ], [
+            'name' => 'Wakif Amanah',
+            'password' => \Illuminate\Support\Facades\Hash::make('password'),
+            'role' => 'wakif',
+        ]);
+
         // Sample Assets
-        $asset1 = \App\Models\WaqfAsset::create([
+        $asset1 = \App\Models\WaqfAsset::updateOrCreate([
+            'name' => 'Tanah Wakaf Strategis Surabaya',
+        ], [
             'name' => 'Tanah Wakaf Strategis Surabaya',
             'location' => 'Jl. Ahmad Yani, Surabaya',
             'area' => 500.00,
@@ -45,7 +59,9 @@ class DatabaseSeeder extends Seeder
             'status' => 'available',
         ]);
 
-        \App\Models\WaqfAsset::create([
+        \App\Models\WaqfAsset::updateOrCreate([
+            'name' => 'Lahan Pertanian Sidoarjo',
+        ], [
             'name' => 'Lahan Pertanian Sidoarjo',
             'location' => 'Wonoayu, Sidoarjo',
             'area' => 2500.00,
@@ -55,7 +71,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Sample Campaign
-        \App\Models\Campaign::create([
+        \App\Models\Campaign::updateOrCreate([
+            'title' => 'Pembangunan Ruko Produktif LWP',
+        ], [
             'waqf_asset_id' => $asset1->id,
             'title' => 'Pembangunan Ruko Produktif LWP',
             'description' => 'Crowdfunding untuk pembangunan unit ruko di atas tanah wakaf strategis guna kemandirian umat.',
@@ -64,6 +82,5 @@ class DatabaseSeeder extends Seeder
             'deadline' => now()->addMonths(6),
             'status' => 'active',
         ]);
-
     }
 }

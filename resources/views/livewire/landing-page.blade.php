@@ -14,9 +14,9 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-6">
-                        <a href="#" class="hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Beranda</a>
-                        <a href="#" class="hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Katalog Aset</a>
-                        <a href="#" class="hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Program Wakaf</a>
+                        <a href="#hero" class="hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Beranda</a>
+                        <a href="#katalog" class="hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Katalog Aset</a>
+                        <a href="#program" class="hover:text-amber-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Program Wakaf</a>
                         @if (Route::has('login'))
                             @auth
                                 <a href="{{ url('/dashboard') }}" class="bg-amber-500 hover:bg-amber-600 text-emerald-900 px-5 py-2.5 rounded-full text-sm font-bold shadow-lg transition duration-300">Dashboard</a>
@@ -34,7 +34,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative bg-emerald-900 overflow-hidden">
+    <header id="hero" class="relative bg-emerald-900 overflow-hidden">
         <div class="absolute inset-0 opacity-20">
             <div class="absolute inset-0" style="background-image: url('https://www.transparenttextures.com/patterns/islamic-art.png');"></div>
         </div>
@@ -78,6 +78,44 @@
             <div class="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center text-center border-b-4 border-amber-500 transition hover:scale-105">
                 <span class="text-4xl mb-2 text-amber-600 font-black">3000+</span>
                 <span class="text-gray-500 font-medium uppercase tracking-widest text-xs">Wakif Aktif</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-[2rem] border border-emerald-100 shadow-xl p-8 md:p-10">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+                <div>
+                    <h3 class="text-emerald-800 text-sm font-bold uppercase tracking-widest mb-2">Alur Wakaf Uang</h3>
+                    <h2 class="text-3xl font-extrabold text-gray-900">Dibuat sederhana untuk masyarakat umum</h2>
+                    <p class="text-gray-500 mt-3 max-w-2xl">Mengikuti pola kampanye publik seperti platform wakaf uang modern: pilih program, isi nominal, bayar via QRIS, dan pantau status wakaf Anda.</p>
+                </div>
+                <a href="#program" class="inline-flex items-center justify-center bg-emerald-800 hover:bg-emerald-900 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition">
+                    Lihat Program Wakaf
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-10">
+                <div class="rounded-2xl bg-emerald-50 p-5 border border-emerald-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-emerald-700">1</p>
+                    <h4 class="text-lg font-black text-gray-900 mt-2">Pilih Program</h4>
+                    <p class="text-sm text-gray-600 mt-2">Masyarakat memilih kampanye wakaf produktif yang ingin didukung.</p>
+                </div>
+                <div class="rounded-2xl bg-emerald-50 p-5 border border-emerald-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-emerald-700">2</p>
+                    <h4 class="text-lg font-black text-gray-900 mt-2">Isi Nominal</h4>
+                    <p class="text-sm text-gray-600 mt-2">Masukkan nama wakif dan nominal wakaf uang tanpa proses login yang rumit.</p>
+                </div>
+                <div class="rounded-2xl bg-emerald-50 p-5 border border-emerald-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-emerald-700">3</p>
+                    <h4 class="text-lg font-black text-gray-900 mt-2">Bayar via Pakasir</h4>
+                    <p class="text-sm text-gray-600 mt-2">Wakif diarahkan ke halaman pembayaran QRIS Pakasir untuk menyelesaikan transaksi.</p>
+                </div>
+                <div class="rounded-2xl bg-emerald-50 p-5 border border-emerald-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-emerald-700">4</p>
+                    <h4 class="text-lg font-black text-gray-900 mt-2">Status Terbarui</h4>
+                    <p class="text-sm text-gray-600 mt-2">Saat pembayaran selesai, status wakaf dan progres kampanye diperbarui otomatis.</p>
+                </div>
             </div>
         </div>
     </section>

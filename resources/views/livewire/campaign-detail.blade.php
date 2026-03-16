@@ -57,7 +57,7 @@
                             </div>
                             <div>
                                 <h4 class="text-sm font-bold text-gray-900">Pembayaran Aman</h4>
-                                <p class="text-xs text-gray-500 italic">Dikelola langsung oleh LWP PWNU Jatim via Midtrans.</p>
+                                <p class="text-xs text-gray-500 italic">Dikelola langsung oleh LWP PWNU Jatim melalui Pakasir untuk wakaf uang publik.</p>
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ use Livewire\Component;
 
 class WaqfAssetManager extends Component
 {
+    public $assetId;
     public $name, $location, $area, $legality;
     public $isModalOpen = false;
 
@@ -18,30 +19,67 @@ class WaqfAssetManager extends Component
 
     public function create()
     {
-        $this->reset(['name', 'location', 'area', 'legality']);
+        $this->resetForm();
         $this->isModalOpen = true;
     }
 
-    public function store()
+    public function edit($id)
+    {
+        $asset = \App\Models\WaqfAsset::findOrFail($id);
+
+        $this->assetId = $asset->id;
+        $this->name = $asset->name;
+        $this->location = $asset->location;
+        $this->area = $asset->area;
+        $this->legality = $asset->legality;
+        $this->isModalOpen = true;
+    }
+
+    public function save()
     {
         $this->validate();
 
-        \App\Models\WaqfAsset::create([
-            'name' => $this->name,
-            'location' => $this->location,
-            'area' => $this->area,
-            'legality' => $this->legality,
-            'status' => 'available',
-        ]);
+        if ($this->assetId) {
+            \App\Models\WaqfAsset::findOrFail($this->assetId)->update([
+                'name' => $this->name,
+                'location' => $this->location,
+                'area' => $this->area,
+                'legality' => $this->legality,
+            ]);
 
+            session()->flash('message', 'Asset updated successfully.');
+        } else {
+            \App\Models\WaqfAsset::create([
+                'name' => $this->name,
+                'location' => $this->location,
+                'area' => $this->area,
+                'legality' => $this->legality,
+                'status' => 'available',
+            ]);
+
+            session()->flash('message', 'Asset created successfully.');
+        }
+
+        $this->resetForm();
         $this->isModalOpen = false;
-        session()->flash('message', 'Asset created successfully.');
     }
 
     public function delete($id)
     {
-        \App\Models\WaqfAsset::find($id)->delete();
+        \App\Models\WaqfAsset::findOrFail($id)->delete();
         session()->flash('message', 'Asset deleted successfully.');
+    }
+
+    public function closeModal()
+    {
+        $this->resetForm();
+        $this->isModalOpen = false;
+    }
+
+    protected function resetForm()
+    {
+        $this->reset(['assetId', 'name', 'location', 'area', 'legality']);
+        $this->resetValidation();
     }
 
     public function render()

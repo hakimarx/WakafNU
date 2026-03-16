@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', \App\Livewire\LandingPage::class);
 Route::get('/campaign/{id}', \App\Livewire\CampaignDetail::class)->name('campaign.detail');
+Route::get('/wakaf/status/{externalId}', function (string $externalId) {
+    $donation = \App\Models\Donation::with('campaign')
+        ->where('external_id', $externalId)
+        ->firstOrFail();
+
+    return view('donation-status', compact('donation'));
+})->name('donation.status');
 Route::post('/payments/callback', [\App\Http\Controllers\PaymentController::class, 'callback']);
 
 Route::middleware([

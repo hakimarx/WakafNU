@@ -15,17 +15,29 @@
         </div>
     @endif
 
+    @if($proposalId)
+        <div class="mb-8 p-6 bg-amber-50 border-l-8 border-amber-500 rounded-2xl text-amber-900 font-medium flex items-center justify-between gap-4">
+            <span>Mode edit aktif. Anda sedang memperbarui proposal yang masih berstatus pending.</span>
+            <button type="button" wire:click="cancelEdit" class="shrink-0 text-sm font-black uppercase tracking-wider text-amber-700 hover:text-black">Batal Edit</button>
+        </div>
+    @endif
+
     <form wire:submit.prevent="submit" class="space-y-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
                 <label class="block text-sm font-black text-gray-700 mb-3 uppercase tracking-wider">Pilih Aset Wakaf</label>
                 <select wire:model="waqfAssetId" class="w-full rounded-2xl border-gray-100 bg-gray-50 py-4 px-6 focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition shadow-inner">
-                    <option value="">-- Pilih Lokasi Aset --</option>
+                    <option value="">{{ $assets->isEmpty() ? '-- Belum Ada Aset Wakaf Tersedia --' : '-- Pilih Lokasi Aset --' }}</option>
                     @foreach($assets as $asset)
                         <option value="{{ $asset->id }}">{{ $asset->name }} ({{ $asset->location }})</option>
                     @endforeach
                 </select>
                 @error('waqfAssetId') <span class="text-xs text-red-500 font-bold mt-2 inline-block">{{ $message }}</span> @enderror
+                @if($assets->isEmpty())
+                    <p class="text-xs text-amber-700 font-semibold mt-2">
+                        Belum ada aset berstatus tersedia. Minta admin atau nadzir menambahkan aset wakaf terlebih dulu, atau tunggu sinkronisasi database production selesai.
+                    </p>
+                @endif
             </div>
 
             <div>
@@ -47,6 +59,16 @@
                 <input type="number" wire:model="investmentValue" class="w-full rounded-2xl border-gray-100 bg-gray-50 py-4 px-6 focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition shadow-inner" placeholder="0">
                 @error('investmentValue') <span class="text-xs text-red-500 font-bold mt-2 inline-block">{{ $message }}</span> @enderror
             </div>
+
+            <div>
+                <label class="block text-sm font-black text-gray-700 mb-3 uppercase tracking-wider">Skema Kerjasama</label>
+                <select wire:model="scheme" class="w-full rounded-2xl border-gray-100 bg-gray-50 py-4 px-6 focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition shadow-inner">
+                    <option value="BOT">BOT</option>
+                    <option value="Mudharabah">Mudharabah</option>
+                    <option value="Musyarakah">Musyarakah</option>
+                    <option value="Sewa">Sewa</option>
+                </select>
+            </div>
             
             <div>
                 <label class="block text-sm font-black text-gray-700 mb-3 uppercase tracking-wider">Upload Dokumen (PDF/DOC)</label>
@@ -63,12 +85,15 @@
                     </div>
                 </div>
                 @error('businessPlanFile') <span class="text-xs text-red-500 font-bold mt-2 inline-block">{{ $message }}</span> @enderror
+                @if($proposalId)
+                    <p class="text-xs text-gray-400 font-medium mt-2">Kosongkan file jika dokumen lama tetap dipakai.</p>
+                @endif
             </div>
         </div>
 
         <div class="pt-6 border-t border-gray-100">
             <button type="submit" wire:loading.attr="disabled" class="w-full bg-blue-600 hover:bg-black text-white font-black py-5 rounded-2xl shadow-xl shadow-blue-100 transition transform hover:-translate-y-1 active:scale-95 disabled:opacity-50 flex items-center justify-center space-x-3 italic uppercase tracking-[0.2em]">
-                <span wire:loading.remove>Submit Proposal Investasi</span>
+                <span wire:loading.remove>{{ $proposalId ? 'Perbarui Proposal Investasi' : 'Submit Proposal Investasi' }}</span>
                 <span wire:loading>Processing Proposal...</span>
             </button>
         </div>
@@ -110,6 +135,9 @@
                                 </span>
                             </td>
                             <td class="px-8 py-6 whitespace-nowrap text-center text-sm font-medium">
+                                @if($prop->status === 'pending')
+                                    <button wire:click="edit({{ $prop->id }})" class="text-blue-600 hover:text-blue-900 font-black italic uppercase tracking-tighter mr-4">Edit</button>
+                                @endif
                                 <button wire:click="delete({{ $prop->id }})" class="text-red-600 hover:text-red-900 font-black italic uppercase tracking-tighter">Hapus</button>
                             </td>
                         </tr>

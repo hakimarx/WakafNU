@@ -15,9 +15,14 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse($managedAssets as $asset)
             <div class="bg-white rounded-3xl shadow-lg border border-emerald-50 overflow-hidden group hover:shadow-2xl transition duration-500 relative">
-                <button wire:click="delete({{ $asset->id }})" class="absolute top-4 right-4 z-20 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white p-2 rounded-full transition opacity-0 group-hover:opacity-100">
+                <div class="absolute top-4 right-4 z-20 flex gap-2 opacity-0 group-hover:opacity-100 transition">
+                <button wire:click="edit({{ $asset->id }})" class="bg-white/90 hover:bg-white text-emerald-700 p-2 rounded-full shadow">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                </button>
+                <button wire:click="delete({{ $asset->id }})" class="bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white p-2 rounded-full transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                 </button>
+                </div>
                 <div class="h-40 bg-emerald-800 flex items-center justify-center p-8 relative">
                     <svg class="h-16 w-16 text-emerald-100/20 absolute -right-4 -bottom-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H7a1 1 0 00-1 1v2a1 1 0 01-1 1H2a1 1 0 110-2V4zm2 2v10h2v-2a3 3 0 013-3h2a3 3 0 013 3v2h2V4H6v2z" clip-rule="evenodd"></path></svg>
                     <div class="text-center relative z-10">
@@ -58,7 +63,7 @@
             <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" wire:click="$set('isModalOpen', false)"></div>
             <div class="inline-block align-middle bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:max-w-lg sm:w-full">
                 <div class="bg-emerald-800 px-6 py-4">
-                    <h3 class="text-lg font-bold text-white uppercase tracking-widest italic">Daftarkan Aset Kelolaan</h3>
+                    <h3 class="text-lg font-bold text-white uppercase tracking-widest italic">{{ $assetId ? 'Perbarui Aset Kelolaan' : 'Daftarkan Aset Kelolaan' }}</h3>
                 </div>
                 <div class="p-8 space-y-4">
                     <div>
@@ -85,8 +90,8 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-8 py-4 flex justify-end space-x-3 rounded-b-3xl">
-                    <button wire:click="$set('isModalOpen', false)" class="text-gray-500 font-bold px-6 py-2 transition hover:text-gray-800">Batal</button>
-                    <button wire:click="store" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-8 py-3 rounded-xl shadow-lg transition transform hover:scale-105">Simpan Data</button>
+                    <button wire:click="closeModal" class="text-gray-500 font-bold px-6 py-2 transition hover:text-gray-800">Batal</button>
+                    <button wire:click="save" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-8 py-3 rounded-xl shadow-lg transition transform hover:scale-105">{{ $assetId ? 'Perbarui Data' : 'Simpan Data' }}</button>
                 </div>
             </div>
         </div>

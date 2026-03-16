@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class DonationComponent extends Component
@@ -10,10 +11,16 @@ class DonationComponent extends Component
     public $amount;
     public $donorName;
     public $snapToken;
+    public array $quickAmounts = [50000, 100000, 250000, 500000];
 
     public function mount($campaignId)
     {
         $this->campaignId = $campaignId;
+    }
+
+    public function fillAmount($amount)
+    {
+        $this->amount = $amount;
     }
 
     public function donate()
@@ -23,8 +30,8 @@ class DonationComponent extends Component
             'donorName' => 'required|string|max:255',
         ]);
 
-        $campaign = \App\Models\Campaign::findOrFail($this->campaignId);
-        $orderId = 'WKF-' . time() . '-' . rand(100, 999);
+        \App\Models\Campaign::findOrFail($this->campaignId);
+        $orderId = 'WKF-' . now()->format('YmdHis') . '-' . Str::upper(Str::random(6));
 
         $donation = \App\Models\Donation::create([
             'external_id' => $orderId,
@@ -35,20 +42,15 @@ class DonationComponent extends Component
             'status' => 'pending',
         ]);
 
-        // Pakasir Redirection
         $slug = config('services.pakasir.project_slug');
-        $email = auth()->user()->email ?? 'guest@example.com';
-        
-        $paymentUrl = "https://app.pakasir.com/p/{$slug}?" . http_build_query([
+        $paymentUrl = "https://app.pakasir.com/pay/{$slug}/" . (int) $this->amount . '?' . http_build_query([
             'order_id' => $orderId,
-            'amount' => (int) $this->amount,
-            'customer_name' => $this->donorName,
-            'customer_email' => $email,
-            'redirect_url' => route('donation.history'), // URL setelah bayar
+            'redirect' => route('donation.status', ['externalId' => $orderId]),
+            'qris_only' => config('services.pakasir.qris_only') ? 1 : 0,
         ]);
 
         try {
-            $donation->update(['snap_token' => $paymentUrl]); // Menyimpan URL ke kolom yang sama agar tidak mengubah migrasi
+            $donation->update(['snap_token' => $paymentUrl]);
             
             $this->dispatch('redirect-to-payment', url: $paymentUrl);
         } catch (\Exception $e) {
