@@ -1,7 +1,6 @@
 {
     "version": 2,
     "framework": null,
-    "outputDirectory": "public",
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.7.1"
@@ -23,16 +22,23 @@
     ],
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_DEBUG": "true",
         "APP_URL": "https://wakaf-nu.vercel.app",
+        "APP_KEY": "base64:N5FGNTlwfXN/H3jN+MhPOtBldqumvOfFtxfC9TDL/QI=",
+        "VERCEL": "1",
         "LARAVEL_STORAGE_PATH": "/tmp/storage",
-        "APP_SERVICES_CACHE": "/tmp/bootstrap/cache/services.php",
-        "APP_PACKAGES_CACHE": "/tmp/bootstrap/cache/packages.php",
         "VIEW_COMPILED_PATH": "/tmp/storage/framework/views",
-        "CACHE_DRIVER": "file",
+        "CACHE_DRIVER": "array",
         "SESSION_DRIVER": "cookie",
         "LOG_CHANNEL": "stderr",
         "DB_CONNECTION": "pgsql",
-        "DB_SSLMODE": "require"
+        "DB_HOST": "db.olxibinmivvwfsfnudtl.supabase.co",
+        "DB_PORT": "5432",
+        "DB_DATABASE": "postgres",
+        "DB_USERNAME": "postgres",
+        "DB_PASSWORD": "",
+        "DB_SSLMODE": "require",
+        "PAKASIR_API_KEY": "AhFAiHtFXlOoxHHln60cf4sebXGjq1Pe",
+        "PAKASIR_PROJECT_SLUG": "lwp-pwnu-jatim"
     }
 }
