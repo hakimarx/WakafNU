@@ -1,4 +1,25 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="min-h-screen bg-gray-50">
+    <!-- Simple Nav -->
+    <nav class="bg-emerald-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="/" class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-inner text-emerald-800 font-bold text-sm">LWP</div>
+                    <span class="text-sm font-bold tracking-tight">Katalog Aset LWP</span>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="hover:text-amber-400 text-xs font-medium uppercase px-3 italic">Beranda</a>
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="bg-amber-500 text-emerald-900 px-4 py-2 rounded-xl text-xs font-bold shadow-lg">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="text-xs font-medium uppercase px-3 italic">Masuk</a>
+                    @endauth
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     {{-- Header Section --}}
     <div class="mb-12 text-center">
         <h1 class="text-5xl font-black text-gray-900 tracking-tight mb-4">
@@ -109,7 +130,6 @@
     </div>
 
     {{-- Pagination --}}
-    <div class="mt-12">
-        {{ $assets->links() }}
     </div>
+</div>
 </div>

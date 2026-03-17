@@ -24,6 +24,8 @@ Route::get('/wakaf/status/{externalId}', function (string $externalId) {
 })->name('donation.status');
 Route::post('/payments/callback', [\App\Http\Controllers\PaymentController::class, 'callback']);
 
+Route::get('/investor/catalog', \App\Livewire\Investor\AssetCatalog::class)->name('investor.catalog');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -36,7 +38,6 @@ Route::middleware([
     Route::get('/register-nadzir', \App\Livewire\NadzirRegistration::class)->name('nadzir.register');
     Route::get('/donations', \App\Livewire\DonationHistory::class)->name('donation.history');
 
-    // Investor Routes
-    Route::get('/investor/catalog', \App\Livewire\Investor\AssetCatalog::class)->name('investor.catalog');
+    // Investor Submission (requires auth)
     Route::get('/investor/submit', \App\Livewire\Investor\InvestmentSubmission::class)->name('investor.submit');
 });

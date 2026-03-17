@@ -47,8 +47,8 @@
                     Kelola dan kembangkan aset umat untuk kemaslahatan bersama. Transparan, Profesional, dan Syar'i bersama LWP PWNU Jatim.
                 </p>
                 <div class="flex space-x-4">
-                    <a href="#katalog" class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl transition transform hover:-translate-y-1">Mulai Berwakaf</a>
-                    <a href="#" class="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg transition">Pelajari BOT</a>
+                    <a href="#program" class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl transition transform hover:-translate-y-1">Mulai Berwakaf</a>
+                    <a href="{{ route('investor.catalog') }}" class="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg transition">Pelajari BOT</a>
                 </div>
             </div>
             <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center">
@@ -127,7 +127,7 @@
                 <h3 class="text-emerald-800 text-sm font-bold uppercase tracking-widest mb-2">Katalog Aset</h3>
                 <h2 class="text-3xl font-extrabold text-gray-900">Tanah Wakaf Strategis</h2>
             </div>
-            <a href="#" class="text-emerald-700 font-bold hover:text-emerald-500 transition">Lihat Semua &rarr;</a>
+            <a href="{{ route('investor.catalog') }}" class="text-emerald-700 font-bold hover:text-emerald-500 transition">Lihat Peta Peluang &rarr;</a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -186,7 +186,7 @@
                             <p class="text-gray-400 text-xs uppercase font-bold tracking-widest">Luas Tanah</p>
                             <p class="text-emerald-800 font-black text-lg">{{ number_format($asset->area, 0) }} m²</p>
                         </div>
-                        <a href="#" class="bg-gray-100 hover:bg-amber-500 hover:text-white text-gray-700 w-12 h-12 rounded-2xl flex items-center justify-center transition duration-300">
+                        <a href="{{ route('investor.catalog') }}" class="bg-gray-100 hover:bg-amber-500 hover:text-white text-gray-700 w-12 h-12 rounded-2xl flex items-center justify-center transition duration-300">
                             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
                     </div>

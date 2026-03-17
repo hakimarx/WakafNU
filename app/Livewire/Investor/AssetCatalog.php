@@ -47,6 +47,6 @@ class AssetCatalog extends Component
             'assets' => $assets,
             'categories' => $categories,
             'cities' => $cities
-        ]);
+        ])->layout('layouts.guest');
     }
 }
