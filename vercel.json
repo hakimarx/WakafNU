@@ -1,16 +1,13 @@
 {
     "version": 2,
     "framework": null,
-    "builds": [
-        {
-            "src": "api/index.php",
-            "use": "vercel-php@0.7.1"
-        },
-        {
-            "src": "public/**",
-            "use": "@vercel/static"
+    "buildCommand": "npm run build",
+    "outputDirectory": "public",
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.7.1"
         }
-    ],
+    },
     "routes": [
         {
             "src": "/build/(.*)",
@@ -38,14 +35,8 @@
         "CACHE_DRIVER": "array",
         "SESSION_DRIVER": "cookie",
         "LOG_CHANNEL": "stderr",
-        "DATABASE_URL": "postgres://postgres%2Eolxibinmivvwfsfnudtl:WakafNU_Secure_2026%21@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres?sslmode=require",
+        "DATABASE_URL": "postgres://postgres.olxibinmivvwfsfnudtl:WakafNU_Secure_2026%21@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require",
         "DB_CONNECTION": "pgsql",
-        "DB_HOST": "aws-0-ap-southeast-1.pooler.supabase.com",
-        "DB_PORT": "5432",
-        "DB_DATABASE": "postgres",
-        "DB_USERNAME": "postgres.olxibinmivvwfsfnudtl",
-        "DB_PASSWORD": "WakafNU_Secure_2026!",
-        "DB_SSLMODE": "require",
         "PAKASIR_API_KEY": "AhFAiHtFXlOoxHHln60cf4sebXGjq1Pe",
         "PAKASIR_PROJECT_SLUG": "lwp-pwnu-jatim",
         "PAKASIR_QRIS_ONLY": "true"
