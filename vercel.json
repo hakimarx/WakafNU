@@ -12,7 +12,7 @@
             "dest": "/public/build/$1"
         },
         {
-            "src": "/(assets|css|js|img|favicon.ico|robots.txt)(.*)",
+            "src": "/(assets|css|js|img|images|favicon.ico|robots.txt)(.*)",
             "dest": "/public/$1$2"
         },
         {
@@ -21,8 +21,9 @@
         }
     ],
     "env": {
+        "APP_NAME": "WakafNU",
         "APP_ENV": "production",
-        "APP_DEBUG": "true",
+        "APP_DEBUG": "false",
         "APP_URL": "https://wakaf-nu.vercel.app",
         "APP_KEY": "base64:N5FGNTlwfXN/H3jN+MhPOtBldqumvOfFtxfC9TDL/QI=",
         "VERCEL": "1",
@@ -36,7 +37,6 @@
         "DB_PORT": "5432",
         "DB_DATABASE": "postgres",
         "DB_USERNAME": "postgres",
-        "DB_PASSWORD": "",
         "DB_SSLMODE": "require",
         "PAKASIR_API_KEY": "AhFAiHtFXlOoxHHln60cf4sebXGjq1Pe",
         "PAKASIR_PROJECT_SLUG": "lwp-pwnu-jatim",

@@ -136,16 +136,52 @@
                 <div class="relative h-64 overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="{{ $asset->name }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
                     <div class="absolute top-4 left-4">
-                        <span class="bg-emerald-600 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-tight shadow-md">{{ $asset->status }}</span>
+                        @if($asset->status === 'commercialized')
+                            <span class="bg-amber-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-tight shadow-md">Produktif</span>
+                        @elseif($asset->status === 'assigned')
+                            <span class="bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-tight shadow-md">Dikelola</span>
+                        @else
+                            <span class="bg-emerald-600 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-tight shadow-md">Tersedia</span>
+                        @endif
                     </div>
+                    @if($asset->commodity)
+                    <div class="absolute bottom-4 right-4">
+                        <span class="bg-white/90 backdrop-blur-sm text-emerald-800 px-3 py-1 rounded-full text-xs font-bold shadow">🌿 {{ $asset->commodity }}</span>
+                    </div>
+                    @endif
                 </div>
                 <div class="p-8">
                     <h4 class="text-xl font-extrabold text-gray-900 mb-2 truncate">{{ $asset->name }}</h4>
-                    <div class="flex items-center text-gray-500 text-sm mb-6">
-                        <svg class="h-5 w-5 mr-1 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <div class="flex items-center text-gray-500 text-sm mb-3">
+                        <svg class="h-5 w-5 mr-1 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         {{ $asset->location }}
                     </div>
-                    <div class="flex justify-between items-center pt-6 border-t border-gray-100">
+
+                    @if($asset->original_area && $asset->original_area != $asset->area)
+                    <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3 mb-3">
+                        <p class="text-xs text-emerald-700 font-semibold">📐 Transformasi Lahan</p>
+                        <p class="text-sm text-gray-700 mt-1">
+                            <span class="line-through text-gray-400">{{ number_format($asset->original_area, 0) }} m²</span>
+                            <span class="mx-1">→</span>
+                            <span class="font-bold text-emerald-800">{{ number_format($asset->area, 0) }} m²</span>
+                        </p>
+                        @if($asset->area_source)
+                        <p class="text-xs text-gray-500 mt-1">{{ $asset->area_source }}</p>
+                        @endif
+                    </div>
+                    @endif
+
+                    @if($asset->annual_revenue)
+                    <div class="bg-amber-50 border border-amber-100 rounded-xl p-3 mb-3">
+                        <p class="text-xs text-amber-700 font-semibold">💰 Pendapatan Tahunan</p>
+                        <p class="text-lg font-black text-amber-700">Rp {{ number_format($asset->annual_revenue, 0, ',', '.') }}</p>
+                        @if($asset->productive_years)
+                        <p class="text-xs text-gray-500">Produktif selama {{ $asset->productive_years }} tahun</p>
+                        @endif
+                    </div>
+                    @endif
+
+                    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
                         <div>
                             <p class="text-gray-400 text-xs uppercase font-bold tracking-widest">Luas Tanah</p>
                             <p class="text-emerald-800 font-black text-lg">{{ number_format($asset->area, 0) }} m²</p>

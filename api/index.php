@@ -6,6 +6,7 @@ $directories = [
     '/tmp/storage/framework/cache/data',
     '/tmp/storage/framework/sessions',
     '/tmp/storage/app/public',
+    '/tmp/storage/logs',
 ];
 
 foreach ($directories as $directory) {

@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
                 '/tmp/storage/framework/cache/data',
                 '/tmp/storage/framework/sessions',
                 '/tmp/storage/app/public',
+                '/tmp/storage/logs',
             ];
 
             foreach ($dirs as $dir) {
@@ -43,30 +44,14 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
 
-            // Ensure compiled views path is correct in Vercel
+            // Set temp paths for Vercel serverless
             config(['view.compiled' => '/tmp/storage/framework/views']);
-
-            if (config('database.default') === 'sqlite') {
-                $databasePath = config('database.connections.sqlite.database');
-
-                if ($databasePath === ':memory:') {
-                    $databasePath = '/tmp/database.sqlite';
-                    config(['database.connections.sqlite.database' => $databasePath]);
-                }
-
-                if (!file_exists($databasePath)) {
-                    @touch($databasePath);
-                }
-            }
+            config(['cache.stores.file.path' => '/tmp/storage/framework/cache/data']);
+            config(['logging.channels.single.path' => '/tmp/storage/logs/laravel.log']);
 
             try {
-                // Running migrations and seeders automatically on Vercel
-                if (!Schema::hasTable('migrations')) {
-                    error_log('Vercel: No migrations table found. Running migrate...');
-                    Artisan::call('migrate', ['--force' => true]);
-                } else {
-                    Artisan::call('migrate', ['--force' => true]);
-                }
+                // Auto-migrate on Vercel (supports both SQLite and pgsql/Supabase)
+                Artisan::call('migrate', ['--force' => true]);
 
                 if (DB::table('users')->count() === 0) {
                     error_log('Vercel: No users found. Running seed...');
