@@ -5,7 +5,7 @@ WakafNU adalah platform manajemen wakaf produktif dan crowdfunding berbasis digi
 ## 🚀 Fitur Utama
 
 ### 1. Crowdfunding Wakaf Uang
-*   Integrasi **Midtrans Payment Gateway** (QRIS, VA, E-Wallet).
+*   Integrasi **Pakasir Payment Gateway** (QRIS, VA, E-Wallet).
 *   Progress bar dana terkumpul secara real-time.
 *   Update otomatis status kampanye setelah pembayaran.
 
@@ -28,7 +28,7 @@ WakafNU adalah platform manajemen wakaf produktif dan crowdfunding berbasis digi
 *   **Frontend**: TALL Stack (Tailwind CSS, Alpine.js, Laravel Livewire 3)
 *   **Database**: MySQL / MariaDB
 *   **Auth**: Laravel Jetstream
-*   **Payment**: Midtrans Snap API
+*   **Payment**: Pakasir Snap API
 
 ## 🛠️ Instalasi
 
@@ -50,8 +50,8 @@ WakafNU adalah platform manajemen wakaf produktif dan crowdfunding berbasis digi
     php artisan key:generate
     ```
 
-4.  Configure Database & Midtrans:
-    Update file `.env` dengan kredensial database dan API Keys Midtrans Anda.
+4.  Configure Database & Pakasir:
+    Update file `.env` dengan kredensial database dan API Keys Pakasir Anda.
 
 5.  Migrate & Seed:
     ```bash
