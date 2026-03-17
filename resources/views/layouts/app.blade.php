@@ -14,6 +14,13 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+        <!-- PWA & Mobile Support -->
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#064e3b">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <link rel="apple-touch-icon" href="https://pwnujatim.or.id/wp-content/uploads/2021/01/cropped-Logo-NU-Emas-192x192.png">
+
         <!-- Styles -->
         @livewireStyles
     </head>
@@ -41,5 +48,12 @@
         @stack('modals')
 
         @livewireScripts
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js');
+                });
+            }
+        </script>
     </body>
 </html>

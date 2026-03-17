@@ -35,4 +35,8 @@ Route::middleware([
 
     Route::get('/register-nadzir', \App\Livewire\NadzirRegistration::class)->name('nadzir.register');
     Route::get('/donations', \App\Livewire\DonationHistory::class)->name('donation.history');
+
+    // Investor Routes
+    Route::get('/investor/catalog', \App\Livewire\Investor\AssetCatalog::class)->name('investor.catalog');
+    Route::get('/investor/submit', \App\Livewire\Investor\InvestmentSubmission::class)->name('investor.submit');
 });

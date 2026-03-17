@@ -1,0 +1,21 @@
+{
+    "name": "WAKAF PWNU JATIM",
+    "short_name": "WakafNU",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#064e3b",
+    "theme_color": "#064e3b",
+    "description": "Lembaga Wakaf & Pertanahan PWNU Jawa Timur",
+    "icons": [
+        {
+            "src": "https://pwnujatim.or.id/wp-content/uploads/2021/01/cropped-Logo-NU-Emas-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "https://pwnujatim.or.id/wp-content/uploads/2021/01/cropped-Logo-NU-Emas-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

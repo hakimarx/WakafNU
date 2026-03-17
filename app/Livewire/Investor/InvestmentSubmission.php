@@ -16,7 +16,9 @@ class InvestmentSubmission extends Component
     public $description;
     public $businessPlanFile;
     public $investmentValue;
-    public $scheme = 'BOT'; // Build Operate Transfer
+    public $scheme = 'BOT'; // BOT, Bagi Hasil, Sewa
+    public $profitSharingNadzir;
+    public $profitSharingLWP;
 
     protected function rules()
     {
@@ -26,6 +28,8 @@ class InvestmentSubmission extends Component
             'description' => 'required|string',
             'businessPlanFile' => ($this->proposalId ? 'nullable' : 'required') . '|file|mimes:pdf,doc,docx,txt|max:10240',
             'investmentValue' => 'required|numeric|min:1000000',
+            'profitSharingNadzir' => 'required_if:scheme,Bagi Hasil|nullable|numeric|min:0|max:100',
+            'profitSharingLWP' => 'required_if:scheme,Bagi Hasil|nullable|numeric|min:0|max:100',
         ];
     }
 
@@ -41,6 +45,8 @@ class InvestmentSubmission extends Component
         $this->description = $proposal->business_plan_description;
         $this->investmentValue = $proposal->investment_value;
         $this->scheme = $proposal->scheme;
+        $this->profitSharingNadzir = $proposal->profit_sharing_nadzir;
+        $this->profitSharingLWP = $proposal->profit_sharing_lwp;
         $this->businessPlanFile = null;
     }
 
@@ -86,6 +92,8 @@ class InvestmentSubmission extends Component
                 'business_plan_file_path' => $path,
                 'scheme' => $this->scheme,
                 'investment_value' => $this->investmentValue,
+                'profit_sharing_nadzir' => $this->profitSharingNadzir,
+                'profit_sharing_lwp' => $this->profitSharingLWP,
                 'status' => 'pending',
             ]);
 

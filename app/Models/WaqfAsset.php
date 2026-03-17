@@ -29,12 +29,20 @@ class WaqfAsset extends Model
         'nadzir_id',
         'image_path',
         'status',
+        'category',
+        'potential_uses',
+        'latitude',
+        'longitude',
+        'video_url',
     ];
 
     protected $casts = [
         'area' => 'decimal:2',
         'original_area' => 'decimal:2',
         'annual_revenue' => 'decimal:2',
+        'potential_uses' => 'array',
+        'latitude' => 'decimal:8',
+        'longitude' => 'decimal:8',
     ];
 
     public function nadzir()
