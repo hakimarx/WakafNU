@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -48,7 +47,6 @@ class AppServiceProvider extends ServiceProvider
             config(['cache.stores.file.path' => '/tmp/storage/framework/cache/data']);
             config(['logging.channels.single.path' => '/tmp/storage/logs/laravel.log']);
 
-            /*
             try {
                 // Auto-migrate on Vercel (supports both SQLite and pgsql/Supabase)
                 Artisan::call('migrate', ['--force' => true]);
@@ -58,9 +56,8 @@ class AppServiceProvider extends ServiceProvider
                     Artisan::call('db:seed', ['--force' => true]);
                 }
             } catch (\Throwable $exception) {
-                error_log('Vercel Boot Error: ' . $exception->getMessage());
+                error_log('Vercel Boot Error: '.$exception->getMessage());
             }
-            */
         }
     }
 }
