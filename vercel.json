@@ -33,6 +33,7 @@
         "APP_KEY": "base64:N5FGNTlwfXN/H3jN+MhPOtBldqumvOfFtxfC9TDL/QI=",
         "VERCEL": "1",
         "LARAVEL_STORAGE_PATH": "/tmp/storage",
+        "LARAVEL_BOOTSTRAP_PATH": "/tmp/bootstrap",
         "VIEW_COMPILED_PATH": "/tmp/storage/framework/views",
         "CACHE_DRIVER": "array",
         "SESSION_DRIVER": "cookie",

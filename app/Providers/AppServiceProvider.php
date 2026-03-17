@@ -4,10 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
             ];
 
             foreach ($dirs as $dir) {
-                if (!is_dir($dir)) {
+                if (! is_dir($dir)) {
                     @mkdir($dir, 0755, true);
                 }
             }

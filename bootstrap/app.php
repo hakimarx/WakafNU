@@ -19,6 +19,10 @@ if ($storagePath = ($_ENV['LARAVEL_STORAGE_PATH'] ?? $_SERVER['LARAVEL_STORAGE_P
     $app->useStoragePath($storagePath);
 }
 
+if ($bootstrapPath = ($_ENV['LARAVEL_BOOTSTRAP_PATH'] ?? $_SERVER['LARAVEL_BOOTSTRAP_PATH'] ?? null)) {
+    $app->useBootstrapPath($bootstrapPath);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
