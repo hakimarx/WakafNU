@@ -71,5 +71,80 @@ class InvestorBaitAssetSeeder extends Seeder
             'latitude' => -7.6046,
             'longitude' => 112.8362,
         ]);
+
+        \App\Models\WaqfAsset::create([
+            'name' => 'Sentra Dapur MBG (Malang Raya)',
+            'location' => 'Kec. Singosari, Malang (Dekat Akses Tol)',
+            'city' => 'Malang',
+            'district' => 'Singosari',
+            'area' => 800.00,
+            'legality' => 'Sertifikat Wakaf AIW',
+            'status' => 'available',
+            'category' => 'Commercial',
+            'potential_uses' => ['Dapur MBG (Makan Bergizi Gratis)', 'Central Kitchen', 'Hub Logistik Makanan'],
+            'description' => 'Lokasi strategis di Malang Utara dengan akses cepat ke kota dan kabupaten. Sangat cocok untuk pusat produksi makanan bergizi bagi jutaan siswa di Malang Raya.',
+            'latitude' => -7.8938,
+            'longitude' => 112.6661,
+        ]);
+
+        \App\Models\WaqfAsset::create([
+            'name' => 'Kompleks Terpadu KUA & Madrasah (Ponorogo)',
+            'location' => 'Pusat Kota Ponorogo',
+            'city' => 'Ponorogo',
+            'district' => 'Ponorogo',
+            'area' => 1200.00,
+            'legality' => 'Sertifikat Wakaf',
+            'status' => 'available',
+            'category' => 'Public Service',
+            'potential_uses' => ['Kantor KUA', 'Madrasah Ibtidaiyah', 'Pusat Dakwah'],
+            'description' => 'Aset wakaf di tengah pemukiman padat. Peluang kerjasama dengan Kemenag atau Yayasan Pendidikan untuk penyediaan fasilitas kantor layanan publik dan pendidikan.',
+            'latitude' => -7.8671,
+            'longitude' => 111.4658,
+        ]);
+
+        \App\Models\WaqfAsset::create([
+            'name' => 'Perkebunan Pisang Cavendish (Blitar)',
+            'location' => 'Kec. Srengat, Blitar',
+            'city' => 'Blitar',
+            'district' => 'Srengat',
+            'area' => 50000.00,
+            'legality' => 'Sertifikat Wakaf Tanpa Sengketa',
+            'status' => 'available',
+            'category' => 'Agribusiness',
+            'potential_uses' => ['Kebun Pisang Cavendish', 'Export Oriented Farming', 'Edu-Wisata Pertanian'],
+            'description' => 'Lahan luas dan subur dengan kontur yang sudah diratakan. Sangat potensial untuk budidaya komoditas ekspor seperti pisang Cavendish dengan sistem bagi hasil.',
+            'latitude' => -8.1009,
+            'longitude' => 112.0622,
+        ]);
+
+        \App\Models\WaqfAsset::create([
+            'name' => 'Estate Tambak Udang Vaname (Sumenep)',
+            'location' => 'Pesisir Pantai Selatan Sumenep',
+            'city' => 'Sumenep',
+            'district' => 'Saronggi',
+            'area' => 35000.00,
+            'legality' => 'Sertifikat Wakaf Aktif',
+            'status' => 'available',
+            'category' => 'Fishery',
+            'potential_uses' => ['Tambak Udang Vaname', 'Pengolahan Hasil Laut', 'Cold Storage'],
+            'description' => 'Lahan pesisir dengan kualitas air laut yang sangat baik untuk budidaya udang intensif. Terbuka untuk investor sektor perikanan dengan skema bagi hasil/sewa.',
+            'latitude' => -7.0543,
+            'longitude' => 113.8821,
+        ]);
+
+        \App\Models\WaqfAsset::create([
+            'name' => 'Kawasan Industri Pabrik & Warehouse (Lumajang)',
+            'location' => 'Dekat Jalur Lintas Selatan, Lumajang',
+            'city' => 'Lumajang',
+            'district' => 'Tempeh',
+            'area' => 15000.00,
+            'legality' => 'Sertifikat Wakaf',
+            'status' => 'available',
+            'category' => 'Industrial',
+            'potential_uses' => ['Pabrik Kayu/Sengon', 'Gudang Distribusi', 'Stockpile'],
+            'description' => 'Berada di jalur strategis distribusi Jawa Timur. Area industri yang sedang berkembang, cocok untuk pabrik pengolahan hasil bumi atau pusat logistik.',
+            'latitude' => -8.1969,
+            'longitude' => 113.2081,
+        ]);
     }
 }
