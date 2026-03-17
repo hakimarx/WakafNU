@@ -39,6 +39,7 @@
         "DB_PASSWORD": "",
         "DB_SSLMODE": "require",
         "PAKASIR_API_KEY": "AhFAiHtFXlOoxHHln60cf4sebXGjq1Pe",
-        "PAKASIR_PROJECT_SLUG": "lwp-pwnu-jatim"
+        "PAKASIR_PROJECT_SLUG": "lwp-pwnu-jatim",
+        "PAKASIR_QRIS_ONLY": "true"
     }
 }
