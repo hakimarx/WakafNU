@@ -28,7 +28,7 @@
     "env": {
         "APP_NAME": "WakafNU",
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_DEBUG": "true",
         "APP_URL": "https://wakaf-nu.vercel.app",
         "APP_KEY": "base64:N5FGNTlwfXN/H3jN+MhPOtBldqumvOfFtxfC9TDL/QI=",
         "VERCEL": "1",

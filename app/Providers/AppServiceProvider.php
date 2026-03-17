@@ -49,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
             config(['cache.stores.file.path' => '/tmp/storage/framework/cache/data']);
             config(['logging.channels.single.path' => '/tmp/storage/logs/laravel.log']);
 
+            /*
             try {
                 // Auto-migrate on Vercel (supports both SQLite and pgsql/Supabase)
                 Artisan::call('migrate', ['--force' => true]);
@@ -60,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
             } catch (\Throwable $exception) {
                 error_log('Vercel Boot Error: ' . $exception->getMessage());
             }
+            */
         }
     }
 }
